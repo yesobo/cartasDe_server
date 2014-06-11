@@ -12,7 +12,15 @@ var bodyParser = require('body-parser');
 // this will let us get the data from a POST
 app.use(bodyParser());
 
-var port = process.env.PORT || 3000; 		// set our port
+//var port = process.env.PORT || 3000; // codio settings
+var port = process.env.OPENSHIFT_NODEJS_PORT || 3000; 		// set our port
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+if (typeof ipaddress === "undefined") {
+    //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+    //  allows us to run/test the app locally.
+	ipaddress = "172.17.0.5";
+    console.warn('No OPENSHIFT_NODEJS_IP var, using ' + ipaddress);
+};
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -31,5 +39,6 @@ app.use('/api', router);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
+//app.listen(port); //codio
+app.listen(port, ipaddress); // openshift
 console.log('Magic happens on port ' + port);
