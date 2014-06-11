@@ -48,4 +48,4 @@ app.use('/api', router);
 // =============================================================================
 //app.listen(port); //codio
 app.listen(port, ipaddress); // openshift
-console.log('Magic happens on port ' + port);
+console.log('Magic happens on port: ' + port);
