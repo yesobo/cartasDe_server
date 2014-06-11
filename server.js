@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 // this will let us get the data from a POST
 app.use(bodyParser());
 
-var port = process.env.PORT || 3000; 		// set our port
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080; 		// set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
