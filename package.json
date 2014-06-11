@@ -1,12 +1,19 @@
 {
   "name": "CartasDe_server",
-  "description": "server side for CartasDe app",
-  "main": "server.js",
   "version": "0.0.1",
-  "private": true,
+  "description": "server side for CartasDe app",
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
   "dependencies": {
     "express": "4.x",
     "mongoose": "~3.6.13",
     "body-parser": "~1.0.1"
-  }
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+
+  "private": true,
+  "main": "server.js"
 }
