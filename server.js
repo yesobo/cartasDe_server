@@ -4,13 +4,16 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express'); 		// call express
-var app        = express(); 				// define our app using express
-var bodyParser = require('body-parser');
+var express 	= require('express');
+var app        	= express(); 				// define our app using express
+var server 		= require('http').Server(app);
+var io 			= require('socket.io')(server, {origins:'*'}); 
+
+//var bodyParser = require('body-parser');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser());
+//app.use(bodyParser());
 
 var port = process.env.OPENSHIFT_NODEJS_PORT;
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
@@ -25,27 +28,54 @@ if (typeof port === "undefined") {
 if (typeof ipaddress === "undefined") {
     //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
     //  allows us to run/test the app locally.
-	ipaddress = "172.17.0.5";
-    console.warn('No OPENSHIFT_NODEJS_IP var, using ' + ipaddress);
+    console.warn('No OPENSHIFT_NODEJS_IP var');
 };
 
-// ROUTES FOR OUR API
+// START THE SERVER
+// =============================================================================
+if (typeof ipaddress === "undefined") {
+	server.listen(port);
+} else {
+    server.listen(port, ipaddress);
+}
+
+/*
+
+// ROUTES FOR OUR API	
 // =============================================================================
 var router = express.Router(); 				// get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+router.get('*', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+});
+
+// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-	res.json({ message: 'hooray! welcome to our api!' });	
+	res.json({ message: 'hooray! welcome to our api!' });
 });
 
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
+app.use('/', router);
 
-// START THE SERVER
-// =============================================================================
-//app.listen(port); //codio
-app.listen(port, ipaddress); // openshift
+*/
+
+app.get('*', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+});
+
+app.get('/', function (req, res) {
+	res.json({ message: 'hooray! welcome to our api!' });
+});
+
+// SOCKET.IO LISTENING -------------------------------
+io.set( 'origins', '*:*' );
+io.on('connection', function(socket) {
+    console.log('conection stablished');
+    socket.emit('news', { hello: 'world' });
+});
+
 console.log('Magic happens on port: ' + port);
