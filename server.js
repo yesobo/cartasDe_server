@@ -4,10 +4,14 @@
 // =============================================================================
 
 // call the packages we need
+// npm modules
 var express 	= require('express');
 var app        	= express(); 				// define our app using express
 var server 		= require('http').Server(app);
 var io 			= require('socket.io')(server, {origins:'*'}); 
+
+// cartasDe Game module
+var cartasDe = require('./cartasgame.js');
 
 //var bodyParser = require('body-parser');
 
@@ -75,7 +79,7 @@ app.get('/', function (req, res) {
 io.set( 'origins', '*:*' );
 io.on('connection', function(socket) {
     console.log('conection stablished');
-    socket.emit('news', { hello: 'world' });
+    cartasDe.initGame(io, socket);
 });
 
 console.log('Magic happens on port: ' + port);
