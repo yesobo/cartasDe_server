@@ -11,6 +11,7 @@ exports.initGame = function(socketIO, socket) {
 
     // Host Events
     gameSocket.on('hostCreateNewGame', createNewGame);
+    gameSocket.on('hostRequestGames', sendRooms);
     
     function createNewGame() {
         console.log('New game creation request');
@@ -20,11 +21,28 @@ exports.initGame = function(socketIO, socket) {
 
         // Return the game ID (newGameId) and the socket ID (mySocketId) to the client
         // 'this' refers to the Socket.IO object storing information for the client
-        this.emit('newGameCreated', {gameId: newGameId, socketId: this.id});
+        this.emit('newGameCreated', 
+                  { 
+                      gameId: newGameId, 
+                      socketId: this.id
+                  });
 
         // store the new game in a room
         this.join(newGameId.toString());
     };
+    
+    function sendRooms() {
+        console.log('Hosted games requested');
+        var rooms = io;
+        console.log(io.sockets.adapter.rooms);
+        
+      /*
+        this.emit('roomsSent', {
+                  	hostedGames: rooms
+                 });
+      */
+    }
+    
 
     /*
     function jugadorJoinsPartida() {

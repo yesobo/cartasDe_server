@@ -3,22 +3,26 @@
 <head>
   <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Player 1</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div>
       <lael id="conn_status">connecting to server...</lael>
   </div>
-  <div>
-      <button id="btnNewGame" class="hidden" onclick="App.Player.createGame()">
-          Crear Partida 
-      </button>        
-  </div>
-  <div id="gameListWrapper">
-      <ul id="gameList">
+  <div id="playerScreen" class="hidden">
+      <div>
+          <button id="btnNewGame" 
+                  onclick="App.Player.createGame()">
+              Crear Partida 
+          </button>
+      </div>
+      <div id="createdGamesListWrapper">
+          <h3>Created games</h3>
+          <ul id="createdGamesList">
           
-      </ul>
+          </ul>
+      </div>
   </div>
   <script src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
   <script src="app.js"></script>

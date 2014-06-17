@@ -82,4 +82,4 @@ io.on('connection', function(socket) {
     cartasDe.initGame(io, socket);
 });
 
-console.log('Magic happens on port: ' + port);
+console.log('Listening on port: ' + port);
