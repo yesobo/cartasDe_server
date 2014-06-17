@@ -8,7 +8,7 @@
 var express 	= require('express');
 var app        	= express(); 				// define our app using express
 var server 		= require('http').Server(app);
-var io 			= require('socket.io')(server, {origins:'*'}); 
+var io 			= require('socket.io')(server, {origins:'*'});
 
 // cartasDe Game module
 var cartasDe = require('./cartasgame.js');
@@ -45,7 +45,7 @@ if (typeof ipaddress === "undefined") {
 
 /*
 
-// ROUTES FOR OUR API	
+// ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router(); 				// get an instance of the express Router
 
@@ -75,8 +75,9 @@ app.get('/', function (req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
-// SOCKET.IO LISTENING -------------------------------
+// SOCKET.IO SET UP -------------------------------
 io.set( 'origins', '*:*' );
+
 io.on('connection', function(socket) {
     console.log('conection stablished');
     cartasDe.initGame(io, socket);

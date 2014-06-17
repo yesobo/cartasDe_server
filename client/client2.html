@@ -4,7 +4,7 @@ To change this template use Tools | Templates.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="jquery-2.1.1.min.js"></script>
     <title>Player 2</title>
     <link rel="stylesheet" href="index.css">
 </head>
@@ -14,23 +14,30 @@ To change this template use Tools | Templates.
     </div>
     <div id="playerScreen" class="hidden">
         <div>
+            <label for="idPartida">Id partida:</label>
+            <input type="text" id="idPartida">
             <button id="btnJoinGame"
                     onclick="App.Player.joinGame()">
                 Unirse a Partida
             </button>
         </div>
+      <!--
         <div>
             <button id="btnGetHostGames"
                     onclick="App.Player.requestHostGames()">
                 Cargar juegos abiertos
             </button>
         </div>
+      -->
         <div id="gameListWrapper">
             <h3>Opened games on server</h3>
             <ul id="gameList">
 
             </ul>
         </div>
+    </div>
+    <div>
+      <label id="lblError"></label>
     </div>
     <script src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
     <script src="app.js"></script>

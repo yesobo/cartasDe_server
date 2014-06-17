@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="jquery-2.1.1.min.js"></script>
   <meta charset="UTF-8">
   <title>Player 1</title>
   <link rel="stylesheet" href="index.css">
@@ -12,17 +12,20 @@
   </div>
   <div id="playerScreen" class="hidden">
       <div>
-          <button id="btnNewGame" 
+          <button id="btnNewGame"
                   onclick="App.Player.createGame()">
-              Crear Partida 
+              Crear Partida
           </button>
       </div>
       <div id="createdGamesListWrapper">
           <h3>Created games</h3>
           <ul id="createdGamesList">
-          
+
           </ul>
       </div>
+  </div>
+  <div>
+    <label id="lblError"></label>
   </div>
   <script src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
   <script src="app.js"></script>
