@@ -1,10 +1,9 @@
 // Enclosing function
 
 var SERVER_URL = "http://localhost:3000";
-/* if server deployed on codio box */
+/* if developing in codio environment */
 //var SERVER_URL = "http://gamori-tampin.codio.io:3000";
-/* if server depoloyed on openshift */
-//var SERVER_URL = "http://prod-cartasde.rhcloud.com/";
+
 
 var IO = {
     // Code for server connections
@@ -69,7 +68,7 @@ var IO = {
 }; // end IO namespace
 
 var Aux = {
-  buildData: function() {
+  buildJoinGameData: function() {
     var inputGameVal = $('#idPartida').val();
     return {
       gameId: inputGameVal
@@ -112,7 +111,7 @@ var App = {
         IO.socket.emit('hostCreateNewGame');
     },
     joinGame: function() {
-        var data = Aux.buildData();
+        var data = Aux.buildJoinGameData();
         IO.socket.emit('hostJoinGame', data);
     }/*,
     requestHostGames: function() {
