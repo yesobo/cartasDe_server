@@ -7,51 +7,51 @@ exports.initGame = function(socketIO, socket) {
 
     io = socketIO;
     gameSocket = socket;
-		console.log(socket.id);
+
+    // comunicate to the client that is connected
     gameSocket.emit('connected',
 			{
 				socketId: socket.id,
 				message: "You are connected!"
 			});
 
-    // Host Events ------------------------
+    // Server willl listen for the following events
     gameSocket.on('hostCreateNewGame', createNewGame);
     gameSocket.on('hostJoinGame', joinGame);
 		//gameSocket.on('hostRequestGames', sendRooms);
 
-		// Handler functions ----------------------
+		//******** EVENT HANDLERS ********************//
     function createNewGame() {
-        console.log('New game creation request');
-
         // Create game with a unique Id between 0 and 100000
         var newGameId = ( Math.random() * 100000) | 0;
 
-        // Return the game ID (newGameId) and the socket ID (mySocketId) to the client
-        // 'this' refers to the Socket.IO object storing information for the client
+        // Return the game ID (newGameId) and the socket ID
+        // (mySocketId) to the client 'this' refers to the
+        // Socket.IO object storing information for the client
         this.emit('newGameCreated',
-                  {
-                      gameId: newGameId,
-                      socketId: this.id
-                  });
+          {
+            gameId: newGameId,
+            socketId: this.id
+          });
 
         // store the new game in a room
         this.join(newGameId.toString());
-    };
-
+    }
 
 		function joinGame(data) {
 				var socket = this;
 
+        // search the room whose name is the game's id
 				var room = io.sockets.adapter.rooms[data.gameId];
-
-				if ( room != undefined) {
+        // if room found, join the socket into it
+				if ( room !== undefined) {
 					data.mySocketId = socket.id;
 					socket.join(data.gameId);
+          // comunicate players that both are in the room
 					io.to(data.gameId).emit('gameReady');
 				} else {
 					this.emit('cartasDeError', {message: 'game not found'});
 				}
-
 		}
 
 /*
@@ -62,10 +62,10 @@ exports.initGame = function(socketIO, socket) {
 
 
         this.emit('roomsSent', {
-                  	hostedGames: rooms
+                  hostedGames: rooms
                  });
 
     }
 */
 
-}
+};

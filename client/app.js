@@ -1,6 +1,6 @@
 // Enclosing function
 
-var SERVER_URL = "http://localhost:3000"
+var SERVER_URL = "http://localhost:3000";
 /* if developing in codio environment */
 //var SERVER_URL = "http://gamori-tampin.codio.io:3000";
 
@@ -26,9 +26,10 @@ var IO = {
       IO.socket.on('newGameCreated', IO.onNewGameCreated);
       IO.socket.on('roomsSent', IO.onRoomsSent);
       IO.socket.on('cartasDeError', IO.onErrorMsg);
-      IO.socket.on('gameReady', IO.onGameReady)
+      IO.socket.on('gameReady', IO.onGameReady);
     },
 
+    //************EVENT HANDLERS *********************//
     /*
      * 'connected' event handler
      */
@@ -64,23 +65,23 @@ var IO = {
     onGameReady: function() {
       App.Dom.showStatus("game ready");
     }
-};
+}; // end IO namespace
 
 var Aux = {
   buildData: function() {
     var inputGameVal = $('#idPartida').val();
     return {
       gameId: inputGameVal
-    }
+    };
   }
-}
+}; // end Aux namespace
 
 var App = {
   // functions that manipulates the DOM
   Dom: {
       updateConnStatus: function(data) {
-          $('#conn_status').text(data.message + " to socket: "
-            + data.socketId);
+          $('#conn_status').text(data.message + " to socket: " +
+            data.socketId);
           // show player controls
           $('#playerScreen').toggleClass('hidden');
       },
@@ -88,8 +89,8 @@ var App = {
       showCreatedGameData: function(data) {
           console.log('showing game data');
           var gameListItem = $('<li></li>');
-          gameListItem.text('Id: ' + data.gameId
-            + ', socket_id: ' + data.socketId);
+          gameListItem.text('Id: ' + data.gameId +
+            ', socket_id: ' + data.socketId);
           $('#createdGamesList').append(gameListItem);
       },
       showHostedGames: function(data) {
@@ -102,22 +103,21 @@ var App = {
       showStatus: function(text) {
         $('#lblError').text(text);
       }
-  },
+  }, // end Dom namespace
 
   // Code for game logic
-
 	Player: {
-        createGame: function() {
-            IO.socket.emit('hostCreateNewGame');
-        },
-        joinGame: function() {
-            var data = Aux.buildData();
-            IO.socket.emit('hostJoinGame', data);
-        },
-        requestHostGames: function() {
-            console.log('requesting hosted games...');
-            IO.socket.emit('hostRequestGames');
-        }
-	}
-
-}
+    createGame: function() {
+        IO.socket.emit('hostCreateNewGame');
+    },
+    joinGame: function() {
+        var data = Aux.buildData();
+        IO.socket.emit('hostJoinGame', data);
+    }/*,
+    requestHostGames: function() {
+        console.log('requesting hosted games...');
+        IO.socket.emit('hostRequestGames');
+    }
+    */
+	} // end Player namespace
+}; // end App namespace
