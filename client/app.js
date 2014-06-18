@@ -1,9 +1,10 @@
 // Enclosing function
 
 var SERVER_URL = "http://localhost:3000";
-/* if developing in codio environment */
+/* if server deployed on codio box */
 //var SERVER_URL = "http://gamori-tampin.codio.io:3000";
-
+/* if server depoloyed on openshift */
+//var SERVER_URL = "http://prod-cartasde.rhcloud.com/";
 
 var IO = {
     // Code for server connections
