@@ -60,10 +60,8 @@ exports.initGame = function(socketIO, socket) {
       var room = io.sockets.adapter.rooms[data.gameId];
       if ( room !== undefined) {
         // comunicate players if they won or lose
-        console.log("room is: ");
-        console.log(room);
-        socket.broadcast.to(data.gameId).emit('youLoose');
         socket.emit('youWin');
+        socket.broadcast.to(data.gameId).emit('youLoose');
       } else {
         this.emit('cartasDeError', {message: 'game not found'});
       }

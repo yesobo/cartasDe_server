@@ -1,8 +1,10 @@
 var jshint = require('gulp-jshint');
+var mocha = require('gulp-mocha');
 var gulp = require('gulp');
 
 var paths = {
-    scripts: ['./client/*.js', './*.js']
+    scripts: ['./client/*.js', './*.js'],
+    tests: ['./test/*.js']
 };
 
 gulp.task('lint', function() {
@@ -11,4 +13,9 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('default', ['lint']);
+gulp.task('mocha', function() {
+  return gulp.src(paths.tests)
+    .pipe(mocha());
+});
+
+gulp.task('default', ['lint', 'mocha']);

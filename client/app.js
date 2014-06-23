@@ -79,7 +79,7 @@ var IO = {
     }
 }; // end IO namespace
 
-var App = function() {
+var App = exports.App = function() {
 
   var gameId = "",
     playerId = "";

@@ -7,7 +7,7 @@
 // npm modules
 var express = require('express');
 var app = express(); // define our app using express
-var server = require('http').Server(app);
+var server = exports.server = require('http').Server(app);
 var io = require('socket.io')(server, {origins:'*'});
 
 // cartasDe Game module
