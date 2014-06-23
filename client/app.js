@@ -27,6 +27,8 @@ var IO = {
       IO.socket.on('roomsSent', IO.onRoomsSent);
       IO.socket.on('cartasDeError', IO.onErrorMsg);
       IO.socket.on('gameReady', IO.onGameReady);
+      IO.socket.on('youWin', IO.onYouWin);
+      IO.socket.on('youLoose', IO.onYouLoose);
     },
 
     //************EVENT HANDLERS *********************//
@@ -42,6 +44,7 @@ var IO = {
      * 'newGameCreated' event handler
      */
     onNewGameCreated: function(data) {
+        App.setGameId(data.gameId);
         App.Dom.showCreatedGameData(data);
     },
 
@@ -64,21 +67,42 @@ var IO = {
     */
     onGameReady: function() {
       App.Dom.showStatus("game ready");
+    },
+
+    onYouWin: function() {
+      console.log('You Win!!');
+      App.Dom.showResult("you win!!");
+    },
+    onYouLoose: function() {
+      console.log('You Loose!!');
+      App.Dom.showResult("you loose!!");
     }
 }; // end IO namespace
 
-var Aux = {
-  buildJoinGameData: function() {
-    var inputGameVal = $('#idPartida').val();
-    return {
-      gameId: inputGameVal
-    };
-  }
-}; // end Aux namespace
+var App = function() {
 
-var App = {
+  var gameId = "",
+    playerId = "";
+
   // functions that manipulates the DOM
-  Dom: {
+  var Aux = {
+    buildJoinGameData: function() {
+      var inputGameVal = $('#idPartida').val();
+      return {
+        gameId: inputGameVal
+      };
+    },
+    buildSelectedSpec: function() {
+      return {
+        gameId: gameId,
+        playerId: playerId,
+        specName: "cilindrada",
+        specValue: "500"
+      };
+    }
+  }; // end Aux namespace
+
+  var Dom = {
       updateConnStatus: function(data) {
           $('#conn_status').text(data.message + " to socket: " +
             data.socketId);
@@ -102,22 +126,42 @@ var App = {
       },
       showStatus: function(text) {
         $('#lblError').text(text);
+      },
+      showResult: function(text) {
+        $('#lblResult').text(text);
       }
-  }, // end Dom namespace
+  }; // end Dom namespace
 
   // Code for game logic
-	Player: {
+	var Player = {
     createGame: function() {
         IO.socket.emit('hostCreateNewGame');
     },
     joinGame: function() {
         var data = Aux.buildJoinGameData();
         IO.socket.emit('hostJoinGame', data);
-    }/*,
+    },
+    sendSpec: function() {
+      var data = Aux.buildSelectedSpec();
+      IO.socket.emit('hostSendSpec', data);
+    }
+    /*,
     requestHostGames: function() {
         console.log('requesting hosted games...');
         IO.socket.emit('hostRequestGames');
     }
     */
-	} // end Player namespace
-}; // end App namespace
+	}; // end Player namespace
+
+  return {
+    Aux: Aux,
+    Dom: Dom,
+    Player: Player,
+    setGameId: function(id) {
+      gameId = id;
+    },
+    getGameId: function() {
+      return gameId;
+    }
+  };
+}(); // end App namespace

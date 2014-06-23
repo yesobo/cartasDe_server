@@ -18,7 +18,8 @@ exports.initGame = function(socketIO, socket) {
     // Server willl listen for the following events
     gameSocket.on('hostCreateNewGame', createNewGame);
     gameSocket.on('hostJoinGame', joinGame);
-		//gameSocket.on('hostRequestGames', sendRooms);
+    gameSocket.on('hostSendSpec', specSent);
+    //gameSocket.on('hostRequestGames', sendRooms);
 
 		//******** EVENT HANDLERS ********************//
     function createNewGame() {
@@ -45,7 +46,6 @@ exports.initGame = function(socketIO, socket) {
 				var room = io.sockets.adapter.rooms[data.gameId];
         // if room found, join the socket into it
 				if ( room !== undefined) {
-					data.mySocketId = socket.id;
 					socket.join(data.gameId);
           // comunicate players that both are in the room
 					io.to(data.gameId).emit('gameReady');
@@ -53,6 +53,21 @@ exports.initGame = function(socketIO, socket) {
 					this.emit('cartasDeError', {message: 'game not found'});
 				}
 		}
+
+    function specSent(data) {
+      var socket = this;
+      // search the room whose name is the game's id
+      var room = io.sockets.adapter.rooms[data.gameId];
+      if ( room !== undefined) {
+        // comunicate players if they won or lose
+        console.log("room is: ");
+        console.log(room);
+        socket.broadcast.to(data.gameId).emit('youLoose');
+        socket.emit('youWin');
+      } else {
+        this.emit('cartasDeError', {message: 'game not found'});
+      }
+    }
 
 /*
     function sendRooms() {
