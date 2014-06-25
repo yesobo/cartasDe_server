@@ -15,7 +15,10 @@ gulp.task('lint', function() {
 
 gulp.task('mocha', function() {
   return gulp.src(paths.tests)
-    .pipe(mocha());
+    .pipe(mocha())
+  	.once('end', function () {
+      process.exit();
+    });
 });
 
 gulp.task('default', ['lint', 'mocha']);
