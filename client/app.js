@@ -1,8 +1,8 @@
 // Enclosing function
 
-var SERVER_URL = "http://localhost:3000";
+//var SERVER_URL = "http://localhost:3000";
 /* if developing in codio environment */
-//var SERVER_URL = "http://gamori-tampin.codio.io:3000";
+var SERVER_URL = "http://gamori-tampin.codio.io:3000";
 
 
 var IO = {
@@ -79,7 +79,7 @@ var IO = {
     }
 }; // end IO namespace
 
-var App = exports.App = function() {
+var App = function() {
 
   var gameId = "",
     playerId = "";

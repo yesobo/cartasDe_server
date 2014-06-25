@@ -39,20 +39,20 @@ exports.initGame = function(socketIO, socket) {
         this.join(newGameId.toString());
     }
 
-		function joinGame(data) {
-				var socket = this;
+    function joinGame(data) {
+        var socket = this;
 
         // search the room whose name is the game's id
-				var room = io.sockets.adapter.rooms[data.gameId];
+        var room = io.sockets.adapter.rooms[data.gameId];
         // if room found, join the socket into it
-				if ( room !== undefined) {
-					socket.join(data.gameId);
-          // comunicate players that both are in the room
-					io.to(data.gameId).emit('gameReady');
-				} else {
-					this.emit('cartasDeError', {message: 'game not found'});
-				}
-		}
+        if ( room !== undefined) {
+            socket.join(data.gameId);
+            // comunicate players that both are in the room
+            io.to(data.gameId).emit('gameReady');
+        } else {
+            this.emit('cartasDeError', {message: 'game not found'});
+        }
+    }
 
     function specSent(data) {
       var socket = this;
