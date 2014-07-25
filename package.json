@@ -26,7 +26,8 @@
     "express": "4.x",
     "socket.io": "~1.0.4",
     "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1"
+    "body-parser": "~1.0.1",
+    "node-uuid": "~1.4.1"
   },
   "devDependencies": {
     "chai": "*",
@@ -34,7 +35,8 @@
     "gulp-jshint": "^1.6.3",
     "gulp-mocha": "^0.4.1",
     "mocha": "*",
-    "socket.io-client": "*"
+    "socket.io-client": "*",
+    "sinon": "~1.10.2"
   },
   "bundleDependencies": [],
   "private": true,

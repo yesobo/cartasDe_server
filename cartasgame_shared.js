@@ -8,30 +8,30 @@ var deck = (function() {
     
     var isLastInQueue = false;
         
-    var test = faunction() {
+    var test = function() {
         console.log('hola');
-    }
+    };
     
     var win = function(carId) {
         usedCards.push(playingQueue.pop());
         usedCards.push(cardId);
-    }
+    };
     
     var loose = function() {
         return playingQueue.pop();
-    }
+    };
     
     var setInitCards = function(array) {
         playingQueue = array.slice(0);
-    }
+    };
     
     var reloadPlayingQueue = function(array) {
         playingQueue = array.slice(0);
-    }
+    };
     
 	return {
         
-    }    
+    };   
     
 })();
 

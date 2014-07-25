@@ -8,17 +8,18 @@ var paths = {
 };
 
 gulp.task('lint', function() {
-  return gulp.src(paths.scripts)
+  return gulp.src(paths.scripts.concat(paths.tests))
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
 gulp.task('mocha', function() {
   return gulp.src(paths.tests)
-    .pipe(mocha())
+  .pipe(mocha({reporter: 'nyan'}))
   	.once('end', function () {
       process.exit();
     });
+  
 });
 
 gulp.task('default', ['lint', 'mocha']);
