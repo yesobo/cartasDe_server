@@ -13,13 +13,13 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('mocha', function() {
+gulp.task('test', function() {
   return gulp.src(paths.tests)
   .pipe(mocha({reporter: 'nyan'}))
   	.once('end', function () {
       process.exit();
     });
-  
+
 });
 
-gulp.task('default', ['lint', 'mocha']);
+gulp.task('default', ['lint', 'test']);

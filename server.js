@@ -67,20 +67,24 @@ app.use('/', router);
 
 */
 
+/*
 app.get('*', function(req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
+	console.log('get * received');
+  res.header("Access-Control-Allow-Origin", "*");
 });
+*/
 
+app.use('/test/', express.static(__dirname + '/client'));
 app.get('/', function (req, res) {
-	res.json({ message: 'hooray! welcome to our api!' });
+	res.send("CartesDe server is working");
 });
 
 // SOCKET.IO SET UP -------------------------------
 io.set( 'origins', '*:*' );
 
 io.on('connection', function(socket) {
-    console.log('conection stablished');
-    cartasDe.initGame(io, socket);
+  console.log('conection stablished');
+  cartasDe.initGame(io, socket);
 });
 
 console.log('Listening on port: ' + port);

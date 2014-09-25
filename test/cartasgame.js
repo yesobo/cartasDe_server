@@ -23,7 +23,7 @@ describe("cartasDe socket API functions.", function() {
 		describe("on game creation (hostCreateNewGame)", function() {
 			before(function(done) {
 				server = require('../server').server;
-            	client = io.connect(config.server_url, options);
+            client = io.connect(config.server_url, options);
 				done();
 			});
 			after(function() {
@@ -47,11 +47,11 @@ describe("cartasDe socket API functions.", function() {
         describe("if game created", function() {
             before(function(done) {
 				server = require('../server').server;
-            	client = io.connect(config.server_url, options);
+            client = io.connect(config.server_url, options);
 				client.once("connect", function() {
 					client.once("newGameCreated", function(data) {
-                    	gameId = data.gameId;
-                    	done();
+                    gameId = data.gameId;
+                    done();
 					});
 					var data = {
 						userId: "player1Id"
@@ -82,22 +82,22 @@ describe("cartasDe socket API functions.", function() {
                 });
             });
         });
-            
+
 		describe("if game is ready", function() {
 			var player1Ready = false;
 			var player2Ready = false;
 			before(function(done) {
 				server = require('../server').server;
-            	client = io.connect(config.server_url, options);
+            client = io.connect(config.server_url, options);
 				client.once("connect", function() {
-					
+
 					client.once("newGameCreated", function(data) {
-						
+
 						client.once("gameReady", function(data) {
 							player1Ready = true;
 						});
-                    	
-						gameId = data.gameId;
+
+            gameId = data.gameId;
 						var joinData = {
 							gameId: gameId
 						};
@@ -107,16 +107,16 @@ describe("cartasDe socket API functions.", function() {
 								player2Ready = true;
 								done();
 							});
-							
-							client2.emit("hostJoinGame", joinData);	
+
+							client2.emit("hostJoinGame", joinData);
 						});
-						
+
 					});
-					
+
 					var data = {
 						userId: "player1Id"
 					};
-					
+
 					client.emit("hostCreateNewGame", data);
                 });
 			});
@@ -180,7 +180,7 @@ describe("cartasDe socket API functions.", function() {
 				};
 				client.emit("hostSendSpec", data);
 			});
-			it("should emit 'cartasDeError' on 'hostSendSpec' if game is not provided", 
+			it("should emit 'cartasDeError' on 'hostSendSpec' if game is not provided",
 					function(done) {
 				client.once("cartasDeError", function(data) {
 					data.message.should.equal('game not found');
@@ -193,7 +193,7 @@ describe("cartasDe socket API functions.", function() {
 				};
 				client.emit("hostSendSpec", data);
 			});
-			it("should emit 'cartasDeError' both clientssends an invalid spec", 
+			it("should emit 'cartasDeError' both clientssends an invalid spec",
 					function(done) {
 				client.once("cartasDeError", function(data) {
 					data.message.should.equal('invalid specification provided');
@@ -207,13 +207,13 @@ describe("cartasDe socket API functions.", function() {
 				client.emit("hostSendSpec", data);
 			});
 			it("should emit 'youWin' to client1 and 'youLoose' to client2 when client1 sends a spec", function(done) {
-				
+
 				client.once("youWin", function() {
 					client2.once("youLoose", function() {
 						done();
 					});
 				});
-				
+
 				client.once("youLoose", function() {
 					client2.once("youWin", function() {
 						done();
